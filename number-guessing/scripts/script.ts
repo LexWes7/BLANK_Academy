@@ -1,5 +1,3 @@
-"use strict";
-exports.__esModule = true;
 var randomNumber = Math.floor(Math.random() * 100);
 console.log(randomNumber);
 var guessSubmit = document.querySelector(".guessSubmit");
@@ -11,21 +9,27 @@ var gameCounter = 0;
 var lastValue;
 var trys = 0;
 var rounds;
-function roundCounter() {
+
+
+
+
+
+function roundCounter(){
     rounds = 10 - trys;
 }
-function reload() {
+function reload(){
     location.reload();
 }
 function showGuesses() {
     if (array.length < 11 && lastValue != randomNumber) {
-        var guesses = document.getElementById("guesses").value;
+        var guesses = (<HTMLInputElement>document.getElementById("guesses")).value;
         array.push(guesses);
+
         para.textContent.toString = array.toString;
         gameCounter++;
         lastValue = array[array.length - 1];
     }
-    if (lastValue == randomNumber) {
+    if (lastValue == randomNumber) {    
         guessMessage.textContent = "You have won! Congratulations!";
         gameOver.parentNode.removeChild(gameOver);
         var x = document.createElement("BUTTON");
@@ -37,10 +41,11 @@ function showGuesses() {
         newButton.addEventListener('click', reload);
     }
     if (lastValue != randomNumber) {
+
         ++trys;
         roundCounter();
-        guessMessage.textContent = "Wrong guess! Try again! " + rounds + " left!";
-        if (array.length == 10) {
+        guessMessage.textContent = "Wrong guess! Try again! "+rounds+" left!";
+        if(array.length == 10){
             trys = 0;
         }
     }
@@ -49,6 +54,10 @@ function showGuesses() {
         gameCounter = 0;
         array = [];
     }
+
 }
+
+
 guessSubmit.addEventListener('click', showGuesses);
-exports["default"] = randomNumber;
+
+export default randomNumber;
