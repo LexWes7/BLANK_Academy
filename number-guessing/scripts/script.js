@@ -1,32 +1,37 @@
-"use strict";
-exports.__esModule = true;
 var randomNumber = Math.floor(Math.random() * 100);
 console.log(randomNumber);
 var guessSubmit = document.querySelector(".guessSubmit");
 var para = document.querySelector('.prevGuesses');
-var guessMessage = document.getElementById("guessMessage");
+var guessResponse = document.getElementById("guessResponse");
 var array = [];
 var gameOver = document.getElementById('gameOver');
 var gameCounter = 0;
 var lastValue;
 var trys = 0;
 var rounds;
-function roundCounter() {
+
+
+
+
+
+function roundCounter(){
     rounds = 10 - trys;
 }
-function reload() {
+function reload(){
     location.reload();
 }
 function showGuesses() {
     if (array.length < 11 && lastValue != randomNumber) {
-        var guesses = document.getElementById("guesses").value;
+        var guesses = (document.getElementById("guesses")).value;
         array.push(guesses);
-        para.textContent.toString = array.toString;
+
+        para.textContent = array;
         gameCounter++;
         lastValue = array[array.length - 1];
     }
-    if (lastValue == randomNumber) {
-        guessMessage.textContent = "You have won! Congratulations!";
+    if (lastValue == randomNumber) {    
+        guessResponse.textContent = "You have won! Congratulations!";
+        highlightResponse();
         gameOver.parentNode.removeChild(gameOver);
         var x = document.createElement("BUTTON");
         var t = document.createTextNode("Restart Game");
@@ -37,10 +42,12 @@ function showGuesses() {
         newButton.addEventListener('click', reload);
     }
     if (lastValue != randomNumber) {
+
         ++trys;
         roundCounter();
-        guessMessage.textContent = "Wrong guess! Try again! " + rounds + " left!";
-        if (array.length == 10) {
+        guessResponse.textContent = "Wrong guess! Try again! "+rounds+" left!";
+        highlightResponse();
+        if(array.length == 10){
             trys = 0;
         }
     }
@@ -50,5 +57,6 @@ function showGuesses() {
         array = [];
     }
 }
+
+
 guessSubmit.addEventListener('click', showGuesses);
-exports["default"] = randomNumber;
