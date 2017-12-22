@@ -1,4 +1,4 @@
-var randomNumber = Math.floor(Math.random() * 100);
+var randomNumber = Math.floor(Math.random() * 101);
 console.log(randomNumber);
 var guessSubmit = document.querySelector(".guessSubmit");
 var para = document.querySelector('.prevGuesses');
@@ -14,10 +14,10 @@ var rounds;
 
 
 
-function roundCounter(){
+function roundCounter() {
     rounds = 10 - trys;
 }
-function reload(){
+function reload() {
     location.reload();
 }
 function showGuesses() {
@@ -29,7 +29,7 @@ function showGuesses() {
         gameCounter++;
         lastValue = array[array.length - 1];
     }
-    if (lastValue == randomNumber) {    
+    if (lastValue == randomNumber) {
         guessResponse.textContent = "You have won! Congratulations!";
         highlightResponse();
         gameOver.parentNode.removeChild(gameOver);
@@ -42,13 +42,23 @@ function showGuesses() {
         newButton.addEventListener('click', reload);
     }
     if (lastValue != randomNumber) {
-
-        ++trys;
-        roundCounter();
-        guessResponse.textContent = "Wrong guess! Try again! "+rounds+" left!";
-        highlightResponse();
-        if(array.length == 10){
-            trys = 0;
+        if (lastValue < randomNumber) {
+            ++trys;
+            roundCounter();
+            guessResponse.textContent = "Wrong guess! Try again! Your guess was too low! " + rounds + " left!";
+            highlightResponse();
+            if (array.length == 10) {
+                trys = 0;
+            }
+        }
+        if (lastValue > randomNumber) {
+            ++trys;
+            roundCounter();
+            guessResponse.textContent = "Wrong guess! Try again! Your guess was too high! " + rounds + " left!";
+            highlightResponse();
+            if (array.length == 10) {
+                trys = 0;
+            }
         }
     }
     if (array.length == 10) {
